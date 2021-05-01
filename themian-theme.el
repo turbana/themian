@@ -406,7 +406,7 @@
        (org-document-title (:foreground ,base+4 :weight bold :height 1.2))
        (org-done (:foreground ,green :weight bold :strike-through t))
        (org-drawer (:background ,unknown))
-       (org-ellipsis (:foreground ,base-1))
+       (org-ellipsis (:foreground ,base-1 :height 0.8))
        (org-footnote (:background ,unknown))
        (org-formula (:background ,unknown))
        (org-habit-alert-face (:foreground ,base+4 :background ,yellow-bg))
