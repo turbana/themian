@@ -53,9 +53,17 @@
     org-table
     org-verbatim
     whitespace-space)
-  "Ensure each face inherits from `fixed-pitch'. This is to support
-  `variable-pitch-mode'."
+  "Ensure each specified face inherits from `fixed-pitch'. This is to support `themian-org-mode-variable-pitch'."
   :group 'themian)
+
+(defcustom themian-org-mode-variable-pitch t
+  "When set, make use of `variable-pitch' face when in `org-mode'.
+
+Note: `variable-pitch' must have it's font set before enabling this theme and `buffer-face-mode' must be enabled for this to take effect.
+
+See `themian-force-fixed-faces' for a list of faces that should remain fixed width."
+  :group 'themian)
+
 
 (defface themian-error nil
   "Face for critical information"
@@ -141,7 +149,8 @@
               (parents (nth 1 config))
               (attrs (nth 2 config)))
           ;; does this face need to inherit from `fixed-pitch'?
-          (when (member face themian-force-fixed-faces)
+          (when (and themian-org-mode-variable-pitch
+                     (member face themian-force-fixed-faces))
             ;; NOTE: `fixed-pitch' should come last as it sets `:weight'
             ;; shadowing other faces
             (setq parents
@@ -752,7 +761,9 @@
        (org-column-title themian-important)
        (org-date themian-strong (:foreground ,cyan))
        (org-date-selected themian-important)
-       (org-default nil ,(face-attr-construct 'variable-pitch))
+       ;; org-default is a default face so we can't use inheritance
+       (org-default nil ,(when themian-org-mode-variable-pitch
+                           (face-attr-construct 'variable-pitch)))
        (org-dispatcher-highlight themian-unknown)
        (org-document-info themian-item)
        (org-document-info-keyword themian-weak)
