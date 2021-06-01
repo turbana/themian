@@ -142,7 +142,25 @@ See `themian-force-fixed-faces' for a list of faces that should remain fixed wid
           (diff-3   (if dark "#071211" "#c8e9e7"))
           (diff-4   (if dark "#1d4946" "#92d3cf"))
           ;;;; THEMIAN-COLORS-END
-          )
+          (default-attributes
+            '(:family unspecified
+              :foundry unspecified
+              :width unspecified
+              :height unspecified
+              :weight unspecified
+              :slant unspecified
+              :foreground unspecified
+              :distant-foreground unspecified
+              :background unspecified
+              :underline unspecified
+              :overline unspecified
+              :strike-through unspecified
+              :box unspecified
+              :inverse unspecified
+              :stipple unspecified
+              :font unspecified
+              :fontset unspecified
+              :extend unspecified)))
      (mapcar
       (lambda (config)
         (let ((face (nth 0 config))
@@ -160,7 +178,8 @@ See `themian-force-fixed-faces' for a list of faces that should remain fixed wid
                          (append parents '(fixed-pitch)))
                         (t
                          (list parents 'fixed-pitch)))))
-          `(,face ((,class ,(append `(:inherit ,parents) attrs))))))
+          (setq attrs (append default-attributes `(:inherit ,parents) attrs))
+          `(,face ((,class ,attrs)))))
       ,@body)))
 
 
