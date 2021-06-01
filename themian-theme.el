@@ -104,12 +104,12 @@ See `themian-force-fixed-faces' for a list of faces that should remain fixed wid
 (defvar themian--show-unknowns nil
   "Show unset faces as right pink.")
 
-(defmacro themian-with-color-variables (variant &rest body)
-  (declare (indent 1))
-  `(let* ((class '((class color) (min-colors 89)))
-          (dark (eq ,variant 'dark))
-          (unknown  "#9933ff")
 
+(defmacro themian--with-color-variables (variant &rest body)
+  "Expose my color theme variables. `blue', `base-4', etc."
+  (declare (indent 1))
+  `(let* ((dark (eq ,variant 'dark))
+          (unknown  "#9933ff")
           ;; The following is generated automatically from colorwheel.py
           ;;;; THEMIAN-COLORS-START
           (base-5   (if dark "#111213" "#fdf5dd"))
@@ -142,52 +142,60 @@ See `themian-force-fixed-faces' for a list of faces that should remain fixed wid
           (diff-3   (if dark "#071211" "#c8e9e7"))
           (diff-4   (if dark "#1d4946" "#92d3cf"))
           ;;;; THEMIAN-COLORS-END
-          (default-attributes
-            '(:family unspecified
-              :foundry unspecified
-              :width unspecified
-              :height unspecified
-              :weight unspecified
-              :slant unspecified
-              :foreground unspecified
-              :distant-foreground unspecified
-              :background unspecified
-              :underline unspecified
-              :overline unspecified
-              :strike-through unspecified
-              :box unspecified
-              :inverse unspecified
-              :stipple unspecified
-              :font unspecified
-              :fontset unspecified
-              :extend unspecified)))
-     (mapcar
-      (lambda (config)
-        (let ((face (nth 0 config))
-              (parents (nth 1 config))
-              (attrs (nth 2 config)))
-          ;; does this face need to inherit from `fixed-pitch'?
-          (when (and themian-org-mode-variable-pitch
-                     (member face themian-force-fixed-faces))
-            ;; NOTE: `fixed-pitch' should come last as it sets `:weight'
-            ;; shadowing other faces
-            (setq parents
-                  (cond ((eq parents nil)
-                         'fixed-pitch)
-                        ((listp parents)
-                         (append parents '(fixed-pitch)))
-                        (t
-                         (list parents 'fixed-pitch)))))
-          (setq attrs (append default-attributes `(:inherit ,parents) attrs))
-          `(,face ((,class ,attrs)))))
-      ,@body)))
+          )
+     ,@body))
+
+
+(defun themian--to-color-theme (forms)
+  "Take a list of FORMS and translate them into a suitable format for `custom-theme-set-faces'. Each form should be of the format (face parent &optional attributes)."
+  (let* ((class '((class color) (min-colors 89)))
+         (default-attributes
+           '(:family unspecified
+             :foundry unspecified
+             :width unspecified
+             :height unspecified
+             :weight unspecified
+             :slant unspecified
+             :foreground unspecified
+             :distant-foreground unspecified
+             :background unspecified
+             :underline unspecified
+             :overline unspecified
+             :strike-through unspecified
+             :box unspecified
+             :inverse unspecified
+             :stipple unspecified
+             :font unspecified
+             :fontset unspecified
+             :extend unspecified)))
+    (mapcar
+     (lambda (config)
+       (let ((face (nth 0 config))
+             (parents (nth 1 config))
+             (attrs (nth 2 config)))
+         ;; does this face need to inherit from `fixed-pitch'?
+         (when (and themian-org-mode-variable-pitch
+                    (member face themian-force-fixed-faces))
+           ;; NOTE: `fixed-pitch' should come last as it sets `:weight'
+           ;; shadowing other faces
+           (setq parents
+                 (cond ((eq parents nil)
+                        'fixed-pitch)
+                       ((listp parents)
+                        (append parents '(fixed-pitch)))
+                       (t
+                        (list parents 'fixed-pitch)))))
+         (setq attrs (append default-attributes `(:inherit ,parents) attrs))
+         `(,face ((,class ,attrs)))))
+     forms)))
 
 
 (defun themian-create-color-theme (theme-name variant)
   (apply
    #'custom-theme-set-faces
    theme-name
-   (themian-with-color-variables variant
+   (themian--to-color-theme
+    (themian--with-color-variables variant
      `(;; default face
        (default nil (:foreground ,base+3 :background ,base-4 :weight normal :box nil
                                  :underline nil :slant normal :overline nil
@@ -979,7 +987,7 @@ See `themian-force-fixed-faces' for a list of faces that should remain fixed wid
        ;; (yaml-tab-face themian-unknown)
        ;; (yas--field-debug-face themian-unknown)
        ;; (yas-field-highlight-face themian-unknown)
-       ))))
+       )))))
 
 
 ;;;###autoload
