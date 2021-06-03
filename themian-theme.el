@@ -83,6 +83,10 @@ See `themian-force-fixed-faces' for a list of faces that should remain fixed wid
   "Face for items (lists, elements, etc)"
   :group 'themian)
 
+(defface themian-match nil
+  "Face for search selections"
+  :group 'themian)
+
 (defface themian-strong nil
   "Face used for emphasis"
   :group 'themian)
@@ -208,6 +212,7 @@ See `themian-force-fixed-faces' for a list of faces that should remain fixed wid
        (themian-heading nil (:foreground ,orange :height 1.2))
        (themian-important themian-strong (:background ,base-3))
        (themian-item nil (:foreground ,blue))
+       (themian-match nil (:foreground ,green :weight bold))
        (themian-strong nil (:foreground ,base+4 :weight bold))
        (themian-subtle nil (:foreground ,base-1 :weight light :slant italic))
        (themian-unknown nil ,(when themian--show-unknowns `(:background ,unknown)))
@@ -239,7 +244,7 @@ See `themian-force-fixed-faces' for a list of faces that should remain fixed wid
        (header-line themian-heading (:background ,base-3))
        (header-line-highlight themian-unknown)
        (highlight region)
-       (isearch themian-highlight)
+       (isearch themian-match)
        (isearch-fail themian-warning)
        (lazy-highlight region (:background ,base-2))
        (link nil (:weight bold :underline t))
