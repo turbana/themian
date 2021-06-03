@@ -54,7 +54,8 @@
     org-verbatim
     whitespace-space)
   "Ensure each specified face inherits from `fixed-pitch'. This is to support `themian-org-mode-variable-pitch'."
-  :group 'themian)
+  :group 'themian
+  :type '((repeat (restricted-sexp :match-alternatives (facep)))))
 
 (defcustom themian-org-mode-variable-pitch t
   "When set, make use of `variable-pitch' face when in `org-mode'.
@@ -62,7 +63,8 @@
 Note: `variable-pitch' must have it's font set before enabling this theme and `buffer-face-mode' must be enabled for this to take effect.
 
 See `themian-force-fixed-faces' for a list of faces that should remain fixed width."
-  :group 'themian)
+  :group 'themian
+  :type '(boolean))
 
 
 (defface themian-error nil
