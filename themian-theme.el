@@ -188,7 +188,7 @@ See `themian-force-fixed-faces' for a list of faces that should remain fixed wid
                        (t
                         (list parents 'fixed-pitch)))))
          (setq attrs (append default-attributes `(:inherit ,parents) attrs))
-         `(,face ((,class ,attrs)))))
+         `(,face (,(cons class attrs)))))
      forms)))
 
 
