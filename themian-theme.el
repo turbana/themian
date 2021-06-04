@@ -212,7 +212,7 @@ See `themian-force-fixed-faces' for a list of faces that should remain fixed wid
                                  :strike-through nil))
 
        ;; themian faces
-       (themian-error nil (:foreground ,orange :background ,red-bg :weight bold))
+       (themian-error nil (:foreground ,red :weight bold))
        (themian-heading nil (:foreground ,orange :height 1.2))
        (themian-important themian-strong (:background ,base-3))
        (themian-item nil (:foreground ,blue))
@@ -221,7 +221,7 @@ See `themian-force-fixed-faces' for a list of faces that should remain fixed wid
        (themian-strong nil (:foreground ,base+4 :weight bold))
        (themian-subtle nil (:foreground ,base-1 :weight light :slant italic))
        (themian-unknown nil ,(when themian--show-unknowns `(:background ,unknown)))
-       (themian-warning nil (:foreground ,yellow :background ,base-3 :weight bold))
+       (themian-warning nil (:foreground ,yellow :weight bold))
        (themian-weak nil (:foreground ,base+1 :weight light))
 
        ;; core faces
@@ -918,9 +918,9 @@ See `themian-force-fixed-faces' for a list of faces that should remain fixed wid
        (spaceline-evil-normal nil (:background ,blue-bg))
        (spaceline-evil-replace nil (:background ,orange-bg))
        (spaceline-evil-visual nil (:background ,violet-bg))
-       (spaceline-flycheck-error nil (:foreground ,red))
-       (spaceline-flycheck-info nil (:foreground ,blue))
-       (spaceline-flycheck-warning nil (:foreground ,yellow))
+       (spaceline-flycheck-error themian-error)
+       (spaceline-flycheck-info themian-item)
+       (spaceline-flycheck-warning themian-warning)
        (spaceline-highlight-face themian-unknown)
        (spaceline-modified themian-unknown)
        (spaceline-python-venv themian-unknown)
