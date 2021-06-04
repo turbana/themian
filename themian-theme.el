@@ -763,7 +763,7 @@ See `themian-force-fixed-faces' for a list of faces that should remain fixed wid
        (mode-line nil (:foreground ,base+3 :background ,base-2))
        (mode-line-buffer-id nil)        ; overidden by `powerline-active1'
        (mode-line-buffer-id-inactive nil) ; overidden by `powerline-inactive1' 
-       (mode-line-emphasis themian-unknown)
+       (mode-line-emphasis themian-warning)
        (mode-line-highlight themian-unknown)
        (mode-line-inactive themian-weak (:foreground ,base+2 :background ,base-3))
        ;; (mouse themian-unknown)
@@ -874,10 +874,10 @@ See `themian-force-fixed-faces' for a list of faces that should remain fixed wid
        ;; (package-status-installed themian-unknown)
        ;; (package-status-new themian-unknown)
        ;; (package-status-unsigned themian-unknown)
-       ;; (powerline-active0 themian-unknown)
+       (powerline-active0 themian-unknown)
        (powerline-active1 themian-strong (:foreground ,orange :background ,base-3))
        (powerline-active2 nil (:background ,base-1))
-       ;; (powerline-inactive0 themian-unknown)
+       (powerline-inactive0 themian-unknown)
        (powerline-inactive1 themian-weak (:background ,base-4))
        (powerline-inactive2 nil (:background ,base-3))
        ;; (query-replace themian-unknown)
