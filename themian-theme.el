@@ -796,7 +796,7 @@ See `themian-force-fixed-faces' for a list of faces that should remain fixed wid
        (org-block nil (:background ,base-5))
        (org-block-begin-line org-drawer)
        (org-block-end-line org-drawer)
-       (org-checkbox themian-important)
+       (org-checkbox themian-strong)
        (org-checkbox-statistics-done themian-weak (:height 0.8))
        (org-checkbox-statistics-todo themian-strong (:height 0.8))
        (org-clock-overlay themian-unknown)
