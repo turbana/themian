@@ -161,7 +161,8 @@ See `themian-force-fixed-faces' for a list of faces that should remain fixed wid
 
 
 (defun themian--to-color-theme (forms)
-  "Take a list of FORMS and translate them into a suitable format for `custom-theme-set-faces'. Each form should be of the format (face parent &optional attributes)."
+  "Take a list of FORMS and translate them into a suitable format for
+`custom-theme-set-faces'. Each form should be of the format: (FACE ATTRIBUTES)."
   (let* ((class '((class color) (min-colors 89)))
          (default-attributes
            '(:family unspecified
@@ -185,23 +186,67 @@ See `themian-force-fixed-faces' for a list of faces that should remain fixed wid
     (mapcar
      (lambda (config)
        (let ((face (nth 0 config))
-             (parents (nth 1 config))
-             (attrs (nth 2 config)))
-         ;; does this face need to inherit from `fixed-pitch'?
-         (when (and themian-org-mode-variable-pitch
-                    (member face themian-force-fixed-faces))
-           ;; NOTE: `fixed-pitch' should come last as it sets `:weight'
-           ;; shadowing other faces
-           (setq parents
-                 (cond ((eq parents nil)
-                        'fixed-pitch)
-                       ((listp parents)
-                        (append parents '(fixed-pitch)))
-                       (t
-                        (list parents 'fixed-pitch)))))
-         (setq attrs (append default-attributes `(:inherit ,parents) attrs))
+             (attrs (nth 1 config)))
+         (themian--merge-plists attrs default-attributes)
          `(,face (,(cons class attrs)))))
      forms)))
+
+
+(defun themian--unroll-parents (forms)
+  "Unroll any parents found for each face so that the attributes are set in each
+specified face, skipping runtime inheritance. Each form in FORMS should be of
+the format: (FACE PARENTS &optional ATTRIBUTES)."
+  (let ((expanded (make-hash-table))
+        (unexpanded (make-hash-table))
+        faces
+        return-value)
+    (mapc (lambda (form)
+            (let* ((face (nth 0 form))
+                   (parents (nth 1 form))
+                   (attrs (nth 2 form)))
+              (puthash face (cons parents attrs) unexpanded)
+              (push face faces)))
+          forms)
+    (mapc (lambda (face)
+               (push (list face (themian--unroll-face expanded unexpanded face))
+                     return-value))
+             faces)
+    return-value))
+
+
+(defun themian--unroll-face (expanded unexpanded face)
+  "Unroll FACE, setting it's attributes in EXPANDED hash table; unrolling any
+parents from UNEXPANDED hash table."
+  (if-let ((value (gethash face expanded)))
+      value
+    (let* ((form (gethash face unexpanded))
+           (parents (car form))
+           (attrs (cdr form)))
+      (unless (listp parents)
+        (setq parents (list parents)))
+      (remhash face unexpanded)
+      (puthash face
+               (apply
+                #'themian--merge-plists
+                attrs
+                (mapcar (lambda (p)
+                          (themian--unroll-face expanded unexpanded p))
+                        parents))
+               expanded))))
+
+
+(defun themian--merge-plists (dest &rest sources)
+  "Merge each plist found in SOURCES into DEST, skipping any key already
+set. Modifies DEST in-place. Each plist in SOURCES must be well formed."
+  (mapc
+   (lambda (plist)
+     (while plist
+       (let ((prop (pop plist))
+             (val (pop plist)))
+         (unless (plist-member dest prop)
+           (setf dest (plist-put dest prop val))))))
+   sources)
+  dest)
 
 
 (defun themian-create-color-theme (theme-name variant)
@@ -209,7 +254,8 @@ See `themian-force-fixed-faces' for a list of faces that should remain fixed wid
    #'custom-theme-set-faces
    theme-name
    (themian--to-color-theme
-    (themian--with-color-variables variant
+    (themian--unroll-parents
+     (themian--with-color-variables variant
      `(;; default face
        (default nil (:foreground ,base+3 :background ,base-4 :weight normal :box nil
                                  :underline nil :slant normal :overline nil
@@ -1004,7 +1050,7 @@ See `themian-force-fixed-faces' for a list of faces that should remain fixed wid
        ;; (yaml-tab-face themian-unknown)
        ;; (yas--field-debug-face themian-unknown)
        ;; (yas-field-highlight-face themian-unknown)
-       )))))
+       ))))))
 
 
 ;;;###autoload
