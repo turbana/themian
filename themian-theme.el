@@ -182,7 +182,8 @@ See `themian-force-fixed-faces' for a list of faces that should remain fixed wid
              :stipple unspecified
              :font unspecified
              :fontset unspecified
-             :extend unspecified)))
+             :extend unspecified
+             :inherit unspecified)))
     (mapcar
      (lambda (config)
        (let ((face (nth 0 config))
