@@ -223,8 +223,12 @@ parents from UNEXPANDED hash table."
     (let* ((form (gethash face unexpanded))
            (parents (car form))
            (attrs (cdr form)))
+      ;; ensure parents is a list
       (unless (listp parents)
         (setq parents (list parents)))
+      ;; possible inherit from 'fixed-pitch
+      (when (member face themian-force-fixed-faces)
+        (setq attrs (append '(:inherit fixed-pitch) attrs)))
       (remhash face unexpanded)
       (puthash face
                (apply
