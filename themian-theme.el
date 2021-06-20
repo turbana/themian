@@ -269,7 +269,7 @@ set. Modifies DEST in-place. Each plist in SOURCES must be well formed."
 
          ;; themian faces
          (themian-error nil (:foreground ,red :weight bold))
-         (themian-heading nil (:foreground ,orange :height 1.2))
+         (themian-heading nil (:foreground ,orange :height 1.2 :inherit variable-pitch))
          (themian-important themian-strong (:background ,base-3))
          (themian-item nil (:foreground ,blue))
          (themian-match nil (:foreground ,green :weight bold))
@@ -716,7 +716,7 @@ set. Modifies DEST in-place. Each plist in SOURCES must be well formed."
          (magit-filename themian-item)
          (magit-hash themian-weak)
          (magit-head themian-unknown)
-         (magit-header-line nil)
+         (magit-header-line themian-heading)
          (magit-header-line-key themian-unknown)
          (magit-header-line-log-select themian-unknown)
          (magit-keyword themian-unknown)
