@@ -56,7 +56,10 @@
     org-special-keyword
     org-table
     org-verbatim
-    whitespace-space)
+    whitespace-indentation
+    whitespace-hspace
+    whitespace-space
+    whitespace-tab)
   "Ensure each specified face inherits from `fixed-pitch'. This is to support `themian-org-mode-variable-pitch'."
   :group 'themian
   :type '((repeat (restricted-sexp :match-alternatives (facep)))))
@@ -1049,6 +1052,17 @@ set. Modifies DEST in-place. Each plist in SOURCES must be well formed."
          (which-key-note-face themian-weak)
          (which-key-separator-face themian-weak)
          (which-key-special-key-face themian-unknown)
+         (whitespace-big-indent (themian-error themian-important))
+         (whitespace-empty (themian-warning themian-important))
+         (whitespace-hspace whitespace-space)
+         (whitespace-indentation whitespace-space)
+         (whitespace-line (themian-error themian-important))
+         (whitespace-newline whitespace-space)
+         (whitespace-space themian-subtle)
+         (whitespace-space-after-tab (themian-warning themian-important))
+         (whitespace-space-before-tab (themian-error themian-important))
+         (whitespace-tab whitespace-space)
+         (whitespace-trailing (themian-error themian-important))    
          ;; (widget-button themian-unknown)
          ;; (widget-button-pressed themian-unknown)
          ;; (widget-documentation themian-unknown)
