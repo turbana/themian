@@ -267,8 +267,8 @@ set. Modifies DEST in-place. Each plist in SOURCES must be well formed."
        `(;; each face is of the format: (FACE &optional PARENTS ATTRIBUTES)
 
          ;; default face
-         (default nil (:foreground ,base+3 :background ,base-4 :weight normal :box nil
-                       :underline nil :slant normal :overline nil :strike-through nil))
+         (default nil ,(append (face-attr-construct 'default)
+                               `(:foreground ,base+3 :background ,base-4)))
 
          ;; themian faces
          (themian-error nil (:foreground ,red :weight bold))
