@@ -942,7 +942,7 @@ set. Modifies DEST in-place. Each plist in SOURCES must be well formed."
          ;; (package-status-new themian-unknown)
          ;; (package-status-unsigned themian-unknown)
          (powerline-active0 themian-unknown)
-         (powerline-active1 themian-strong (:foreground ,orange :background ,base-3))
+         (powerline-active1 themian-strong (:foreground ,blue :background ,base-3))
          (powerline-active2 nil (:background ,base-1))
          (powerline-inactive0 themian-unknown)
          (powerline-inactive1 themian-weak (:background ,base-4))
