@@ -331,6 +331,7 @@ set. Modifies DEST in-place. Each plist in SOURCES must be well formed."
          ;; rest faces
          ;; (Info-quoted themian-unknown)
          (auto-dim-other-buffers-face nil (:background ,base-5))
+         (auto-dim-other-buffers-hide-face nil (:foreground ,base-5 :background ,base-5))
          (bookmark-menu-bookmark (themian-item themian-strong))
          (bookmark-menu-heading themian-heading)
          ;; (border themian-unknown)
