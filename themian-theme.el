@@ -73,6 +73,9 @@ See `themian-force-fixed-faces' for a list of faces that should remain fixed wid
   :group 'themian
   :type '(boolean))
 
+(defcustom themian-org-mode-emphasize-todo t
+  "When set, org todo items have extra emphasis.")
+
 
 (defface themian-error nil
   "Face for critical information"
@@ -876,7 +879,9 @@ set. Modifies DEST in-place. Each plist in SOURCES must be well formed."
          (org-document-info themian-item)
          (org-document-info-keyword themian-weak)
          (org-document-title themian-strong (:height 1.2))
-         (org-done themian-strong (:foreground ,green :height 0.8 :strike-through t))
+         ,(if themian-org-mode-emphasize-todo
+              `(org-done themian-strong (:foreground ,green :height 0.8 :strike-through t))
+            `(org-done nil (:foreground ,green :height 0.8)))
          (org-drawer themian-subtle (:slant normal))
          (org-ellipsis themian-subtle)
          (org-footnote (themian-weak link))
@@ -914,7 +919,9 @@ set. Modifies DEST in-place. Each plist in SOURCES must be well formed."
          (org-tag-group themian-unknown)
          (org-target themian-unknown)
          (org-time-grid themian-weak)
-         (org-todo themian-strong (:foreground ,yellow :height 0.8))
+         ,(if themian-org-mode-emphasize-todo
+              `(org-todo themian-strong (:foreground ,yellow :height 0.8))
+            `(org-todo nil (:foreground ,yellow :height 0.8)))
          (org-upcoming-deadline (org-warning themian-subtle))
          (org-upcoming-distant-deadline themian-unknown)
          (org-verbatim org-code)
