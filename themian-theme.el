@@ -304,7 +304,7 @@ set. Modifies DEST in-place. Each plist in SOURCES must be well formed."
          (font-lock-regexp-grouping-backslash nil (:foreground ,base+1))
          (font-lock-regexp-grouping-construct nil (:foreground ,base+2))
          (font-lock-string-face nil (:foreground ,base+2))
-         (font-lock-type-face nil (:foreground ,green))
+         (font-lock-type-face nil (:foreground ,green :slant italic))
          (font-lock-variable-name-face nil (:foreground ,base+4))
          (font-lock-warning-face themian-warning)
          (fringe nil (:foreground ,base+1 :background ,base-5))
@@ -331,6 +331,22 @@ set. Modifies DEST in-place. Each plist in SOURCES must be well formed."
          (trailing-whitespace themian-warning)
          (vertical-border nil (:foreground ,base-1))
          (warning themian-warning)
+
+         ;; extra tree-sitter faces
+         ;; (customize-set-variable 'treesit-font-lock-level 4)
+         (font-lock-bracket-face nil (:foreground ,base+2))
+         (font-lock-delimiter-face nil (:foreground ,base+2))
+         (font-lock-doc-markup-face nil (:foreground ,unknown))
+         (font-lock-escape-face font-lock-string-face (:weight bold))
+         (font-lock-function-call-face nil (:foreground ,base+4))
+         (font-lock-misc-punctuation-face nil (:foreground ,unknown))
+         (font-lock-number-face nil (:foreground ,green))
+         (font-lock-operator-face nil (:foreground ,base+2))
+         (font-lock-property-name-face nil (:foreground ,base+4))
+         (font-lock-property-use-face nil (:foreground ,base+4))
+         (font-lock-punctuation-face nil (:foreground ,unknown))
+         (font-lock-regexp-face nil (:foreground ,orange :background ,base-4))
+         (font-lock-variable-use-face nil)
 
          ;; rest faces
          ;; (Info-quoted themian-unknown)
