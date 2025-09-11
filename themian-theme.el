@@ -275,7 +275,7 @@ set. Modifies DEST in-place. Each plist in SOURCES must be well formed."
 
          ;; themian faces
          (themian-error nil (:foreground ,red :weight bold))
-         (themian-heading nil (:foreground ,orange :height 1.2 :inherit variable-pitch))
+         (themian-heading nil (:foreground ,orange :height 1.2 :inherit header-line))
          (themian-important themian-strong (:background ,base-3))
          (themian-item nil (:foreground ,blue))
          (themian-match nil (:foreground ,green :weight bold))
@@ -308,7 +308,7 @@ set. Modifies DEST in-place. Each plist in SOURCES must be well formed."
          (font-lock-variable-name-face nil (:foreground ,base+4))
          (font-lock-warning-face themian-warning)
          (fringe nil (:foreground ,base+1 :background ,base-5))
-         (header-line themian-heading (:background ,base-3))
+         (header-line)
          (header-line-highlight themian-unknown)
          (highlight nil (:background ,base-3))
          (hl-line highlight)
